@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const { roles } = require('../roles')
+const enabled = 1;
 
 async function hashPassword(password) {
     return await bcrypt.hash(password, 10);
@@ -14,9 +15,9 @@ async function validatePassword(plainPassword, hashedPassword) {
 
 exports.signup = async (req, res, next) => {
     try {
-        const { email, password, role } = req.body
+        const { email, password, role, name, phone, birthday, profilePicture } = req.body
         const hashedPassword = await hashPassword(password);
-        const newUser = new User({ email, password: hashedPassword, role: role || "basic" });
+        const newUser = new User({ name, email, phone, birthday, profilePicture, enabled, password: hashedPassword, role: role || "basic" });
         const accessToken = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
             expiresIn: "1d"
         });

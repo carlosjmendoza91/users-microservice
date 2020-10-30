@@ -2,10 +2,34 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
     email: {
         type: String,
         required: true,
         trim: true
+    },
+    phone: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    birthday: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    profilePicture: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    enabled: {
+        type: Number,
+        required: true
     },
     password: {
         type: String,
@@ -19,6 +43,9 @@ const UserSchema = new Schema({
     accessToken: {
         type: String
     }
+},
+{
+    timestamps: true
 });
 
 const User = mongoose.model('user', UserSchema);
