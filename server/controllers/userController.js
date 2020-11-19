@@ -36,9 +36,19 @@ exports.login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
-        if (!user) return next(new Error('Email does not exist'));
+        if (!user) {
+            return res.status(200).json({
+                status: false,
+                message: 'Email does not exist'
+            })
+        }
         const validPassword = await validatePassword(password, user.password);
-        if (!validPassword) return next(new Error('Password is not correct'))
+        if (!validPassword) {
+            return res.status(200).json({
+                status: false,
+                message: 'Password is not correct'
+            })
+        }
         const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: "1d"
         });
