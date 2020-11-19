@@ -55,6 +55,7 @@ exports.login = async (req, res, next) => {
         await User.findByIdAndUpdate(user._id, { accessToken })
         res.status(200).json({
             data: { 
+                id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
@@ -96,8 +97,23 @@ exports.updateUser = async (req, res, next) => {
         await User.findByIdAndUpdate(userId, update);
         const user = await User.findById(userId)
         res.status(200).json({
-            data: user,
+            data: update,
             message: 'User has been updated'
+        });
+    } catch (error) {
+        next(error)
+    }
+}
+
+exports.updateUserStatus = async (req, res, next) => {
+    try {
+        const update = req.body
+        const userId = req.params.userId;
+        await User.findByIdAndUpdate(userId, update);
+        const user = await User.findById(userId)
+        res.status(200).json({
+            data: update,
+            message: 'User status has been updated'
         });
     } catch (error) {
         next(error)

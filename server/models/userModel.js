@@ -5,12 +5,14 @@ const UserSchema = new Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        immutable:true
     },
     email: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        immutable:true
     },
     phone: {
         type: String,
@@ -20,7 +22,8 @@ const UserSchema = new Schema({
     birthday: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        immutable:true
     },
     profilePicture: {
         type: String,
